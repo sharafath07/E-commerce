@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const productHelper = require('../helpers/product-helpers'); 
 
 router.get('/', function(req, res, next){
     let products = [
@@ -50,7 +51,7 @@ router.get('/add-product', function(req, res){
 router.post('/add-product', function(req,res){
     console.log(req.body);
     console.log(req.files.Image);
-    
+    productHelper.addProduct(req.body)
     
 })
 

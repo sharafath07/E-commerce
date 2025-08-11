@@ -8,7 +8,8 @@ const fileUpload = require('express-fileupload')
 
 const userRouter = require('./routes/user');
 const adminRouter = require('./routes/admin');
-
+const db = require('./config/connection');
+const { error, log } = require("console");
 const app = express();
 
 // Handlebars setup
@@ -28,6 +29,22 @@ app.use(fileUpload())
 
 // Static folder
 app.use(express.static(path.join(__dirname, "public")));
+db.connect((err) => {
+    if (err) {
+        console.log("❌ Database connection failed", err);
+        process.exit(1);
+    } else {
+        console.log("✅ Database connected successfully");
+
+        // app.get('/', (req, res) => {
+        //     res.send('Hello, MongoDB!');
+        // });
+
+        // app.listen(3000, () => {
+        //     console.log("🚀 Server running on port 3000");
+        // });
+    }
+});
 
 // Routes
 app.use("/", userRouter);
